@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+ <html>
+  <head>
+    <meta name='viewport' content='user-scalable=0'>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>http://10.10.10.16:8080/</title>
+    <style>
+      body, input, button, table { font-family:Tahoma; font-size:11px; }
+      div#slider1 {height:100px;}
+      div#slider2 {height:100px;}
+      div#slider3 {height:100px;}
+      div#slider4 {height:100px;}
+    </style>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script>
+      var oReq = new XMLHttpRequest();
+      var lastValue = 0;
+      var sendReq = function(value) {
+        if (lastValue != value) {
+          lastValue = value;
+          oReq.open("GET", value, true);
+          oReq.send();
+        }
+      }
+      //var changedSlider1 = function(event) {
+      //  sendReq("push?pwm="+$("#slider1").slider("value")/1.0)
+      //}
+      var changedSlider2 = function(event) {
+        sendReq("tiny?address=2&pwm="+$("#slider2").slider("value"))
+      }
+      var changedSlider3 = function(event) {
+          sendReq("tiny?address=4&pwm="+($("#slider3").slider("value") ))
+      }
+      //var changedSlider4 = function(event) {
+      //  sendReq("tiny?pwm="+$("#slider4").slider("value")/1.0)
+      //}
+      $(function() {
+        /*
+        $("#slider1").slider({
+          min: 9.0,
+          max: 100.0,
+          value: 50.0,
+          slide: changedSlider1,
+          change: changedSlider1
+        });
+        */
+        $("#slider2").slider({
+          min: 0.0,
+          max: 255.0,
+          value: 50.0,
+          slide: changedSlider2,
+          change: changedSlider2
+        });
+        $("#slider3").slider({
+          min: 0.0,
+          max: 255.0,
+          value: 50.0,
+          slide: changedSlider3,
+          change: changedSlider3
+        });
+        /*
+        $("#slider4").slider({
+          min: 0.0,
+          max: 255.0,
+          value: 50.0,
+          slide: changedSlider4,
+          change: changedSlider4
+        });
+        */
+      });
+    </script>
+  </head>
+  <body>
+    <!--div id="slider1"></div-->
+    <div id="slider2"></div>
+    <div id="slider3"></div>
+    <!--div id="slider4"></div-->
+  </body>
+ </html>

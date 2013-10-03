@@ -1,0 +1,14 @@
+
+
+Here's an ATtiny45 with one 10-bit ADC pin and two 8-bit PWM pins. The ADC is used to read the value of a potentiometer. One PWM pin is used to control a LED-driver, the other one a piezo buzzer.
+
+The ATtiny is an I2C slave to a Raspberry Pi, which can read out the ATtiny's ADC and set/get the PWM. One PWM pin has a fixed frequency and the pulse width is modulated, this is used to dim the LED, the other PWM pin has a variable frequency, so that the buzzer can buzz at different frequencies. A second ADC could be added on the reset pin, but that would cause the chip not to be reprogrammable anymore.
+
+The I2C communication seems to be unstable, as "IOError: [Errno 5] Input/output error" do occur every now and then. In the video you can notice this by a stuck note.
+
+The Raspberry Pi is hosting a Twisted server which, when a certain page of it gets requested, runs the following sequence: Read the 10-bit ADC, divide it by 4 and write that value to the LED pin, then play a fixed sequence of 3 notes.
+
+The ATtiny45 gets programmed live (no wiring need to be changed) through an Arduino UNO which has the ArduinoIDE sketch loaded onto it.
+
+https://www.youtube.com/watch?v=QWF8_Mfo1ek
+
