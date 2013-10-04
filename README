@@ -12,6 +12,7 @@ The ATtiny45 gets programmed live (no wiring need to be changed) through an Ardu
 
 https://www.youtube.com/watch?v=QWF8_Mfo1ek
 
-*** Apparently I managed to solve this issue. I added two 4.7k pull-up resistors to the i2c lines (no comment...) and lowered the baudrate to 28800. I got this value while trying to replace i2c with the SoftwareSerial library, and that baudrate was the only one giving the least ammount of errors on a serial line. I dropped the idea of using SoftwareSerial because it consumes too much RAM (ATtiny45 has only 256 bytes), leaving no decent ammount for the app itself.
+*** Apparently I managed to solve this issue. I added two 4.7k pull-up resistors to the i2c lines (no comment...) and lowered the baud rate to 28800. I got this value while trying to replace i2c with the SoftwareSerial library, and that baud rate was the only one giving the least ammount of errors on a serial line. I dropped the idea of using SoftwareSerial because it consumes too much RAM (ATtiny45 has only 256 bytes), leaving no decent ammount for the app itself.
 
-modprobe -r i2c_bcm2708; modprobe i2c_bcm2708 baudrate=28800;
+temporary:  modprobe -r i2c_bcm2708; modprobe i2c_bcm2708 baudrate=28800;
+persistent: echo options i2c_bcm2708 baudrate=28800 > /etc/modprobe.d/i2c.conf
