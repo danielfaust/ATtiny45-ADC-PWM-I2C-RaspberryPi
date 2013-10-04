@@ -4,7 +4,7 @@ Here's an ATtiny45 with one 10-bit ADC pin and two 8-bit PWM pins. The ADC is us
 
 The ATtiny is an I2C slave to a Raspberry Pi, which can read out the ATtiny's ADC and set/get the PWM. One PWM pin has a fixed frequency and the pulse width is modulated, this is used to dim the LED, the other PWM pin has a variable frequency, so that the buzzer can buzz at different frequencies. A second ADC could be added on the reset pin, but that would cause the chip not to be reprogrammable anymore.
 
-The I2C communication seems to be unstable, as "IOError: [Errno 5] Input/output error" do occur every now and then. In the video you can notice this by a stuck note.
+The I2C communication seems to be unstable, as "IOError: [Errno 5] Input/output error" do occur every now and then. In the video you can notice this by a stuck note. ***
 
 The Raspberry Pi is hosting a Twisted server which, when a certain page of it gets requested, runs the following sequence: Read the 10-bit ADC, divide it by 4 and write that value to the LED pin, then play a fixed sequence of 3 notes.
 
@@ -12,3 +12,6 @@ The ATtiny45 gets programmed live (no wiring need to be changed) through an Ardu
 
 https://www.youtube.com/watch?v=QWF8_Mfo1ek
 
+*** Apparently I managed to solve this issue. I added two 4.7k pull-up resistors to the i2c lines (no comment...) and lowered the baudrate to 28800. I got this value while trying to replace i2c with the SoftwareSerial library, and that baudrate was the only one giving the least ammount of errors on a serial line. I dropped the idea of using SoftwareSerial because it consumes too much RAM (ATtiny45 has only 256 bytes), leaving no decent ammount for the app itself.
+
+modprobe -r i2c_bcm2708; modprobe i2c_bcm2708 baudrate=28800;
